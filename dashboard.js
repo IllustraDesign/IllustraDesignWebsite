@@ -8,7 +8,7 @@ const databases = new Databases(client);
 async function fetchProducts() {
     try {
         // Use the correct Database and Collection IDs
-        const response = await databases.listDocuments("67de7e03000b096c2f65", "67de7e120032d7553c80");
+        const response = await databases.listDocuments("67def33a003639079812", "67def3f50018dacbe18d");
         const productList = document.getElementById("productList");
         productList.innerHTML = "";
 

@@ -24,17 +24,17 @@ document.getElementById("productForm").addEventListener("submit", async (e) => {
 
     try {
         // Upload image to Appwrite Storage (Use correct bucket ID)
-        const imageUpload = await storage.createFile("67de7ec90037a88100a3", ID.unique(), imageFile);
+        const imageUpload = await storage.createFile("67def576003bbab396a8", ID.unique(), imageFile);
 
         // Generate the correct image URL
-        const imageUrl = `https://cloud.appwrite.io/v1/storage/buckets/67de7ec90037a88100a3/files/${imageUpload.$id}/view?project=67de7dd4000f29e394fb`;
+        const imageUrl = `https://cloud.appwrite.io/v1/storage/buckets/67def576003bbab396a8/files/${imageUpload.$id}/view?project=67de7dd4000f29e394fb`;
 
         // Store product in Appwrite Database (Ensure correct Database & Collection ID)
         console.log({
             Title, description, category, subcategory, size, price, imageUrl
           });
           
-        await databases.createDocument("67de7e03000b096c2f65", "67de7e120032d7553c80", ID.unique(), {
+        await databases.createDocument("67def33a003639079812", "67def3f50018dacbe18d", ID.unique(), {
             Title, description, category, subcategory, size, price, imageUrl
         });
 
