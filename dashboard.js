@@ -1,7 +1,7 @@
 import { Client, Databases, Storage, ID } from "https://esm.sh/appwrite";
 
 const client = new Client();
-client.setEndpoint("https://cloud.appwrite.io/v1").setProject("67de7dd4000f29e394fb");
+client.setEndpoint("https://cloud.appwrite.io/v1").setProject("67def1fd000f20fb3cc7");
 
 const databases = new Databases(client);
 
