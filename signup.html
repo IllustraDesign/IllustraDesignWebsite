@@ -4,12 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
+    <style>
+        .phone-container {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            background: #f3f3f3;
+            width: fit-content;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .phone-container span {
+            padding: 10px;
+            background: #e0e0e0;
+            border-right: 1px solid #ccc;
+        }
+        .phone-container input {
+            border: none;
+            outline: none;
+            padding: 10px;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
     <h1>Create an Account</h1>
     <form id="signupForm">
         <input type="text" id="name" placeholder="Full Name" required>
-        <input type="text" id="phone" placeholder="Phone Number" required>
+        
+        <div class="phone-container">
+            
+            <input type="text" id="phone" placeholder="Phone Number" required oninput="enforcePhoneNumberFormat(this)">
+        </div>
+
         <input type="email" id="email" placeholder="Email ID" required>
         <input type="password" id="password" placeholder="Password" required>
         <input type="password" id="confirmPassword" placeholder="Re-enter Password" required>
