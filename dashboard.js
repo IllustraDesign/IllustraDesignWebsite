@@ -1,16 +1,58 @@
-import { Client, Databases, Storage, ID } from "https://esm.sh/appwrite";
+import { Client, Databases, Account, Storage, ID } from "https://esm.sh/appwrite";
 
 const client = new Client();
 client.setEndpoint("https://cloud.appwrite.io/v1").setProject("67def1fd000f20fb3cc7");
 
 const databases = new Databases(client);
+const account = new Account(client);
+
+document.addEventListener("DOMContentLoaded", function () {
+    checkLogin(); // Ensure user is logged in before fetching products
+    fetchProducts(); // Fetch product details
+
+    // Attach logout functionality after the DOM is fully loaded
+    const logoutButton = document.getElementById("logoutButton");
+    if (logoutButton) {
+        logoutButton.addEventListener("click", async () => {
+            try {
+                await account.deleteSession("current");
+                alert("Logged out successfully!");
+                window.location.href = "login.html";
+            } catch (error) {
+                console.error("Logout error:", error);
+                alert("Logout failed. Please try again.");
+            }
+        });
+    } else {
+        console.error("Logout button not found.");
+    }
+});
+
+async function checkLogin() {
+    try {
+        const user = await account.get(); // Fetch logged-in user details
+        const welcomeMessage = document.getElementById("welcomeMessage");
+        if (welcomeMessage) {
+            welcomeMessage.innerText = `Welcome, ${user.name}!`;
+        }
+    } catch (error) {
+        console.error("User not logged in:", error);
+        window.location.href = "login.html"; // Redirect to login page if not authenticated
+    }
+}
 
 async function fetchProducts() {
     try {
+        const productList = document.getElementById("productList");
+        if (!productList) {
+            console.error("Product list container not found.");
+            return;
+        }
+        productList.innerHTML = "<p>Loading products...</p>";
+
         // Use the correct Database and Collection IDs
         const response = await databases.listDocuments("67def33a003639079812", "67def3f50018dacbe18d");
-        const productList = document.getElementById("productList");
-        productList.innerHTML = "";
+        productList.innerHTML = ""; // Clear loading message
 
         if (!response.documents.length) {
             productList.innerHTML = "<p>No products available.</p>";
@@ -34,12 +76,19 @@ async function fetchProducts() {
         });
     } catch (error) {
         console.error("Error fetching products:", error);
-        document.getElementById("productList").innerHTML = "<p>Error loading products.</p>";
+        const productList = document.getElementById("productList");
+        if (productList) {
+            productList.innerHTML = "<p>Error loading products.</p>";
+        }
     }
 }
 
 function showDetails(product) {
     const details = document.getElementById("productDetails");
+    if (!details) {
+        console.error("Product details container not found.");
+        return;
+    }
     details.innerHTML = `
         <h2>${product.title}</h2>
         <p>${product.description}</p>
@@ -55,5 +104,3 @@ function highlightSelection(selectedDiv) {
     });
     selectedDiv.style.border = "2px solid blue";
 }
-
-fetchProducts();
