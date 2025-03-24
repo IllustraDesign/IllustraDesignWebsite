@@ -94,3 +94,23 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
         alert(`❌ Error creating account: ${error.message}`);
     }
 });
+
+document.getElementById("signupForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    let loader = document.getElementById("loader");
+    let button = document.querySelector("button");
+
+    // Show loader & disable button
+    loader.style.display = "block";
+    button.disabled = true;
+    button.style.opacity = "0.5";
+
+    // Simulate a loading process (e.g., 2 seconds delay)
+    setTimeout(function() {
+        loader.style.display = "none"; // Hide loader
+        button.disabled = false;
+        button.style.opacity = "1";
+    }, 2000); // Simulated delay (adjust as needed)
+});
+
